@@ -9,13 +9,12 @@ def read_excel():
     sheet_command = excel_file.sheet_by_name('功能模板')
 
     # 获取模板头信息
-    rows = sheet_command.row_values(0)
-    all_rows = len(rows)
+    col_num = sheet_command.nrows
 
     # 创建二维数组将excel中的信息写入
-    commands = [[] for i in range(all_rows)]
-    for rowNum in range(all_rows):
-        commands[rowNum].append(sheet_command.col_values(rowNum))
+    commands = [[] for i in range(col_num)]
+    for rowNum in range(col_num):
+        commands[rowNum].append(sheet_command.row_values(rowNum))
 
     # 返回二维数组作为后续处理的数据
     return commands

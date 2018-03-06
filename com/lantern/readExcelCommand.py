@@ -3,7 +3,7 @@ import xlrd
 
 def read_excel():
     # 文件位置
-    excel_file = xlrd.open_workbook(r'C:\Users\ONE\PycharmProjects\lantern_source\excels\excel4selenium.xlsx')
+    excel_file = xlrd.open_workbook(r'../../excels/excel4selenium.xlsx')
 
     # 获取功能模板内容
     sheet_command = excel_file.sheet_by_name('功能模板')

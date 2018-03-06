@@ -1,22 +1,32 @@
 from readExcelCommand import read_excel
 
 
-def foo(var):
-    return {
-            'a': 1,
-            'b': 2,
-            'c': 3,
-    }.get(var, 'error')    # 'error'为默认返回值，可自设置
+def open_chrome(y):
+    print('i open', y)
+
+
+def click(y):
+    print('i click', y)
+
+
+action_map = {'open chrome': open_chrome, 'click': click}
+
+
+def switch(x, y):
+    return action_map.get(x)(y)
 
 
 def do_by_selenium():
 
     actions = read_excel()
+    # 获取动作标志 用于后续动作处理
+    action_title = actions[0]
 
-    for action in actions:
-        print(action)
-
-    print(actions)
+    # 获取指令
+    for action in actions[1:]:
+        print(action[3])
+        action_map(action[3])(0)
+        #switch(action[3](action[4]))
 
 
 if __name__ == '__main__':

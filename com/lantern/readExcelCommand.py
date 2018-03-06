@@ -11,10 +11,10 @@ def read_excel():
     # 获取模板头信息
     col_num = sheet_command.nrows
 
-    # 创建二维数组将excel中的信息写入
-    commands = [[] for i in range(col_num)]
+    # 创建数组将excel中的信息写入
+    commands = []
     for rowNum in range(col_num):
-        commands[rowNum].append(sheet_command.row_values(rowNum))
+        commands.append(sheet_command.row_values(rowNum))
 
     # 返回二维数组作为后续处理的数据
     return commands

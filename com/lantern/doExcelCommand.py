@@ -24,9 +24,7 @@ def do_by_selenium():
 
     # 获取指令
     for action in actions[1:]:
-        print(action[3])
-        action_map(action[3])(0)
-        #switch(action[3](action[4]))
+        switch(action[3], action[4])
 
 
 if __name__ == '__main__':

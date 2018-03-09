@@ -4,22 +4,27 @@ from doDriver import *
 
 
 # 浏览器打开事件
-def l_open_driver(path, text):
-    driver_switch(path)
+def open_driver(type, path, text):
+    driver_switch(type, path)
 
 
 # 点击事件
-def l_click(path, text):
-    search_switch(path).click()
+def single_click(type, path, text):
+    search_switch(type, path).click()
 
 
 # 输入事件
-def l_input(path, text):
-    search_switch(path).send_keys(text)
+def textbox_input(type, path, text):
+    search_switch(type, path).send_keys(text)
 
 
-def action_switch(action, path, text):
-    return action_map.get(action)(path, text)
+# 地址跳转事件
+def browser_get(type, path, text):
+    CommonClass().get_driver().get(path)
+
+
+def action_switch(action, type, path, text):
+    return action_map.get(action)(type, path, text)
 
 
 # 关闭当前页
@@ -40,12 +45,14 @@ def do_excel_actions():
 
     # 获取指令
     for action in actions[1:]:
-        action_switch(action[3], action[4], action[5])
+        # action, type, path, text
+        action_switch(action[4], action[5], action[6], action[7])
 
 
-action_map = {'open': l_open_driver,
-              'click': l_click,
-              'input': l_input}
+action_map = {'open': open_driver,
+              'click': single_click,
+              'input': textbox_input,
+              'get': browser_get}
 
 
 if __name__ == '__main__':

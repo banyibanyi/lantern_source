@@ -1,8 +1,8 @@
 from driverCommon import CommonClass
 
 
-def search_switch(path):
-    return search_map.get(path.split('=')[0])(path.split('"')[1])
+def search_switch(type, path):
+    return search_map.get(type)(path)
 
 
 # 根据ID查询控件

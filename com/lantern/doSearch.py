@@ -1,4 +1,4 @@
-from doExcelCommand import CommonClass
+from driverCommon import CommonClass
 
 
 def search_switch(path):

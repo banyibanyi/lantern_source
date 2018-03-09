@@ -6,7 +6,6 @@ from doDriver import *
 # 浏览器打开事件
 def l_open_driver(path, text):
     driver_switch(path)
-    CommonClass().get_driver().get(path.split('"')[1])
 
 
 # 点击事件
@@ -51,4 +50,3 @@ action_map = {'open': l_open_driver,
 
 if __name__ == '__main__':
     do_excel_actions()
-

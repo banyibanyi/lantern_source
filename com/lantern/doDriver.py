@@ -1,38 +1,37 @@
 from selenium import webdriver
+from driverCommon import CommonClass
 
 
+# 匹配不同种类的浏览器
 def driver_switch(path):
-    return CommonClass().set_driver(search_map.get(path.split('=')[0]))
+    driver_map.get(path.split('=')[0])(path.split('"')[1])
 
 
-def driver_by_chrome():
-    print('chrome')
-    return webdriver.Chrome()
+def driver_by_chrome(path):
+    driver = webdriver.Chrome()
+    driver.get(path)
+    CommonClass().set_driver(driver)
 
 
-def driver_by_firefox():
-    return webdriver.Firefox()
+def driver_by_firefox(path):
+    driver = webdriver.Firefox()
+    driver.get(path)
+    CommonClass().set_driver(driver)
 
 
-def driver_by_ie():
-    return webdriver.Ie()
+def driver_by_ie(path):
+    driver = webdriver.Ie()
+    driver.get(path)
+    CommonClass().set_driver(driver)
 
 
-def driver_by_edge():
-    return webdriver.Edge()
+def driver_by_edge(path):
+    driver = webdriver.Edge()
+    driver.get(path)
+    CommonClass().set_driver(driver)
 
 
-search_map = {'chrome': driver_by_chrome,
+driver_map = {'chrome': driver_by_chrome,
               'firefox': driver_by_firefox,
               'ie': driver_by_ie,
               'edge': driver_by_edge}
-
-
-class CommonClass:
-    @classmethod
-    def set_driver(cls, driver):
-        cls.driver = driver
-
-    @classmethod
-    def get_driver(cls):
-        return cls.driver

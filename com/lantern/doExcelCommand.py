@@ -1,14 +1,12 @@
 from readExcelCommand import read_excel
-from selenium import webdriver
 from doSearch import *
 from doDriver import *
 
 
 # 浏览器打开事件
-def l_open_chrome(path, text):
-    driver = webdriver.Chrome()
-    driver.get(path)
-    CommonClass().set_driver(driver)
+def l_open_driver(path, text):
+    driver_switch(path)
+    CommonClass().get_driver().get(path.split('"')[1])
 
 
 # 点击事件
@@ -21,7 +19,6 @@ def l_input(path, text):
     search_switch(path).send_keys(text)
 
 
-#
 def action_switch(action, path, text):
     return action_map.get(action)(path, text)
 
@@ -47,7 +44,7 @@ def do_excel_actions():
         action_switch(action[3], action[4], action[5])
 
 
-action_map = {'open chrome': l_open_chrome,
+action_map = {'open': l_open_driver,
               'click': l_click,
               'input': l_input}
 

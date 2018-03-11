@@ -1,3 +1,4 @@
+# encoding: utf-8
 import xlrd
 from collections import Counter
 

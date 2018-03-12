@@ -2,30 +2,51 @@
 from readExcelCommand import read_excel
 from doSearch import *
 from doDriver import *
+from assertInfo import *
 
 
 # 浏览器打开事件
-def open_driver(type, path, text):
+def open_driver(type, path, text, assert_oral, assert_type, assert_goal):
     driver_switch(type, path)
+
+    if assert_type != '':
+        if assert_oral == 'title':
+            assert_oral = CommonClass().get_driver().title
+        assert_info = assert_switch(assert_type, assert_oral, assert_goal)
+        print(assert_info.assert_result, assert_info.assert_message)
 
 
 # 点击事件
-def single_click(type, path, text):
+def single_click(type, path, text, assert_oral, assert_type, assert_goal):
     search_switch(type, path).click()
 
 
 # 输入事件
-def textbox_input(type, path, text):
+def textbox_input(type, path, text, assert_oral, assert_type, assert_goal):
     search_switch(type, path).send_keys(text)
 
 
 # 地址跳转事件
-def browser_get(type, path, text):
+def browser_get(type, path, text, assert_oral, assert_type, assert_goal):
     CommonClass().get_driver().get(path)
 
 
-def action_switch(action, type, path, text):
-    return action_map.get(action)(type, path, text)
+# 事件映射
+def action_switch(action, action_type, path, text, assert_oral, assert_type, assert_goal):
+    return action_map.get(action)(action_type, path, text, assert_oral, assert_type, assert_goal)
+
+
+# 相等断言
+def assert_equal(assert_oral, assert_goal):
+    assert_info = assertInfo()
+    assert_info.assert_result = (assert_oral == assert_goal)
+    assert_info.assert_message = 'Target value is ' + assert_goal + 'Actual value is ' + assert_oral;
+    return assert_info
+
+
+# 断言映射
+def assert_switch(assert_type, assert_oral, assert_goal):
+    return assert_map.get(assert_type)(assert_oral, assert_goal)
 
 
 # 关闭当前页
@@ -47,13 +68,16 @@ def do_excel_actions():
     # 获取指令
     for action in actions[1:]:
         # action, type, path, text
-        action_switch(action[4], action[5], action[6], action[7])
+        action_switch(action[4], action[5], action[6], action[7], action[8], action[9], action[10])
 
 
+# 事件关键字-方法映射表
 action_map = {'open': open_driver,
               'click': single_click,
               'input': textbox_input,
               'get': browser_get}
+
+assert_map = {'equal': assert_equal}
 
 
 if __name__ == '__main__':

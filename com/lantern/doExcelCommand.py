@@ -1,4 +1,4 @@
-# encoding: utf-8
+# -*- coding: utf-8 -*-
 from readExcelCommand import read_excel
 from doSearch import *
 from doDriver import *

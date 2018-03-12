@@ -1,4 +1,4 @@
-# encoding: utf-8
+# -*- coding: utf-8 -*-
 # browser WebDriver单例
 class CommonClass:
     driver = None

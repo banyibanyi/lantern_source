@@ -40,7 +40,7 @@ def action_switch(action, action_type, path, text, assert_oral, assert_type, ass
 def assert_equal(assert_oral, assert_goal):
     assert_info = assertInfo()
     assert_info.assert_result = (assert_oral == assert_goal)
-    assert_info.assert_message = 'Target value is ' + assert_goal + 'Actual value is ' + assert_oral;
+    assert_info.assert_message = 'Target value is ' + assert_goal + 'Actual value is ' + assert_oral
     return assert_info
 
 

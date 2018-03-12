@@ -20,8 +20,9 @@ def read_excel():
     loop_dict.pop('loop')
 
     # 创建数组将excel中的信息写入
-    commands = []
+    commands = [sheet_command.row_values(0)]
 
+    # 指令标题行
     # 如果dict不为空说明有循环标记，需要将指令循环添加到指令队列中
     if loop_dict:
         row_num = 0
@@ -62,7 +63,6 @@ def read_excel():
                 else:
                     print("error, too many parameters")
             row_num = row_num + 1
-
     # 如果excel中没有循环标志 直接将所有内容转换到数组中
     else:
         for row_num in range(col_num):

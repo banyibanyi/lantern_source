@@ -3,6 +3,10 @@ from readExcelCommand import read_excel
 from doSearch import *
 from doDriver import *
 from assertInfo import *
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.common.by import By
+import selenium.webdriver.support.expected_conditions as EC
+import selenium.webdriver.support.ui as ui
 
 
 # 浏览器打开事件
@@ -23,6 +27,9 @@ def single_click(type, path, text, assert_oral, assert_type, assert_goal):
 
 # 输入事件
 def textbox_input(type, path, text, assert_oral, assert_type, assert_goal):
+    if path == 'j_username':
+        ui.WebDriverWait(CommonClass().get_driver(), 10).until(EC.visibility_of_element_located((By.ID, 'j_username')))
+
     search_switch(type, path).send_keys(text)
 
 

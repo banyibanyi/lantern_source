@@ -5,7 +5,7 @@ from driverCommon import CommonClass
 
 # 匹配不同种类的浏览器
 def driver_switch(type, path):
-    driver_map.get(type)(path)
+    driver_map.get(type.lower())(path)
 
 
 def driver_by_chrome(path):

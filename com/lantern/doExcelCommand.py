@@ -3,16 +3,14 @@ from readExcelCommand import read_excel
 from doSearch import *
 from doDriver import *
 from assertInfo import *
-from selenium.common.exceptions import TimeoutException
-from selenium.webdriver.common.by import By
-import selenium.webdriver.support.expected_conditions as EC
+import selenium.webdriver.support.expected_conditions as ec
 import selenium.webdriver.support.ui as ui
 
 
 # 浏览器打开事件
-def open_driver(type, path, text, assert_oral, assert_type, assert_goal):
+def open_driver(type, path, text, assert_oral, assert_type, assert_goal, wait_time):
     driver_switch(type, path)
-
+    # 断言判断
     if assert_type != '':
         if assert_oral == 'title':
             assert_oral = CommonClass().get_driver().title
@@ -21,26 +19,41 @@ def open_driver(type, path, text, assert_oral, assert_type, assert_goal):
 
 
 # 点击事件
-def single_click(type, path, text, assert_oral, assert_type, assert_goal):
-    search_switch(type, path).click()
+def single_click(type, path, text, assert_oral, assert_type, assert_goal, wait_time):
+    # 如果设置了等待元素出现
+    if wait_time != '' and int(wait_time) > 0:
+        ui.WebDriverWait(CommonClass().get_driver(), int(wait_time)) \
+            .until(ec.visibility_of_element_located((type, path)))
+    try:
+        search_switch(type, path).click()
+    except Exception as err:
+        print('one more time', err)
+        CommonClass.get_driver().navigate.refresh()
+        search_switch(type, path).click()
 
 
 # 输入事件
-def textbox_input(type, path, text, assert_oral, assert_type, assert_goal):
-    if path == 'j_username':
-        ui.WebDriverWait(CommonClass().get_driver(), 10).until(EC.visibility_of_element_located((By.ID, 'j_username')))
-
-    search_switch(type, path).send_keys(text)
+def textbox_input(type, path, text, assert_oral, assert_type, assert_goal, wait_time):
+    # 如果设置了等待元素出现
+    if wait_time != '' and int(wait_time) > 0:
+        ui.WebDriverWait(CommonClass().get_driver(), int(wait_time))\
+            .until(ec.visibility_of_element_located((type, path)))
+    try:
+        search_switch(type, path).send_keys(text)
+    except Exception as err:
+        print('two more time', err)
+        CommonClass.get_driver().navigate.refresh()
+        search_switch(type, path).send_keys(text)
 
 
 # 地址跳转事件
-def browser_get(type, path, text, assert_oral, assert_type, assert_goal):
+def browser_get(type, path, text, assert_oral, assert_type, assert_goal, wait_time):
     CommonClass().get_driver().get(path)
 
 
 # 事件映射
-def action_switch(action, action_type, path, text, assert_oral, assert_type, assert_goal):
-    return action_map.get(action)(action_type, path, text, assert_oral, assert_type, assert_goal)
+def action_switch(action, action_type, path, text, assert_oral, assert_type, assert_goal, wait_time):
+    return action_map.get(action)(action_type, path, text, assert_oral, assert_type, assert_goal, wait_time)
 
 
 # 相等断言
@@ -75,7 +88,8 @@ def do_excel_actions():
     # 获取指令
     for action in actions[1:]:
         # action, type, path, text
-        action_switch(action[4], action[5], action[6], action[7], action[8], action[9], action[10])
+        print(action)
+        action_switch(action[4], action[5], action[6], action[7], action[8], action[9], action[10], action[11])
 
 
 # 事件关键字-方法映射表
@@ -84,8 +98,8 @@ action_map = {'open': open_driver,
               'input': textbox_input,
               'get': browser_get}
 
-assert_map = {'equal': assert_equal}
 
+assert_map = {'equal': assert_equal}
 
 if __name__ == '__main__':
     do_excel_actions()

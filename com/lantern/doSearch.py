@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from driverCommon import CommonClass
+from selenium.webdriver.common.by import By
 
 
 def search_switch(type, path):
@@ -46,11 +47,11 @@ def search_by_css(path):
     return CommonClass().get_driver().find_element_by_css_selector(path)
 
 
-search_map = {'id': search_by_id,
-              'name': search_by_name,
-              'class': search_by_class,
-              'tag': search_by_tag,
-              'link': search_by_link,
-              'partial': search_by_partial,
-              'xpath': search_by_xpath,
-              'css': search_by_css}
+search_map = {By.ID: search_by_id,
+              By.NAME: search_by_name,
+              By.CLASS_NAME: search_by_class,
+              By.TAG_NAME: search_by_tag,
+              By.LINK_TEXT: search_by_link,
+              By.PARTIAL_LINK_TEXT: search_by_partial,
+              By.XPATH: search_by_xpath,
+              By.CSS_SELECTOR: search_by_css}

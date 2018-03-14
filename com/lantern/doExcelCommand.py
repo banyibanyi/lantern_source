@@ -12,10 +12,7 @@ def open_driver(type, path, text, assert_oral, assert_type, assert_goal, wait_ti
     driver_switch(type, path)
     # 断言判断
     if assert_type != '':
-        if assert_oral == 'title':
-            assert_oral = CommonClass().get_driver().title
-        assert_info = assert_switch(assert_type, assert_oral, assert_goal)
-        print(assert_info.assert_result, assert_info.assert_message)
+        print(assert_switch(assert_type, assert_goal))
 
 
 # 点击事件
@@ -27,7 +24,7 @@ def single_click(type, path, text, assert_oral, assert_type, assert_goal, wait_t
     try:
         search_switch(type, path).click()
     except Exception as err:
-        print('one more time', err)
+        print(err)
         CommonClass.get_driver().navigate.refresh()
         search_switch(type, path).click()
 
@@ -49,6 +46,9 @@ def textbox_input(type, path, text, assert_oral, assert_type, assert_goal, wait_
 # 地址跳转事件
 def browser_get(type, path, text, assert_oral, assert_type, assert_goal, wait_time):
     CommonClass().get_driver().get(path)
+    # 断言判断
+    if assert_type != '':
+        print(assert_switch(assert_type, assert_goal))
 
 
 # 事件映射
@@ -65,8 +65,8 @@ def assert_equal(assert_oral, assert_goal):
 
 
 # 断言映射
-def assert_switch(assert_type, assert_oral, assert_goal):
-    return assert_map.get(assert_type)(assert_oral, assert_goal)
+def assert_switch(assert_type, assert_goal):
+    return assert_map.get(assert_type)(assert_goal)
 
 
 # 关闭当前页
@@ -86,7 +86,7 @@ def do_excel_actions():
     # action_title = actions[0]
 
     # 获取指令
-    for action in actions[1:]:
+    for action in actions[2:]:
         # action, type, path, text
         print(action)
         action_switch(action[4], action[5], action[6], action[7], action[8], action[9], action[10], action[11])
@@ -99,7 +99,6 @@ action_map = {'open': open_driver,
               'get': browser_get}
 
 
-assert_map = {'equal': assert_equal}
 
 if __name__ == '__main__':
     do_excel_actions()

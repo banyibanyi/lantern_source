@@ -5,6 +5,7 @@ from doDriver import *
 from assertInfo import *
 import selenium.webdriver.support.expected_conditions as ec
 import selenium.webdriver.support.ui as ui
+from selenium.webdriver.support.ui import Select
 
 
 # 浏览器打开事件
@@ -38,7 +39,7 @@ def textbox_input(type, path, text, assert_oral, assert_type, assert_goal, wait_
     try:
         search_switch(type, path).send_keys(text)
     except Exception as err:
-        print('two more time', err)
+        print(err)
         CommonClass.get_driver().navigate.refresh()
         search_switch(type, path).send_keys(text)
 
@@ -49,6 +50,17 @@ def browser_get(type, path, text, assert_oral, assert_type, assert_goal, wait_ti
     # 断言判断
     if assert_type != '':
         print(assert_switch(assert_type, assert_goal))
+
+
+# 列表框事件
+def select_action(type, path, text, assert_oral, assert_type, assert_goal, wait_time):
+    temp = text.split(':')
+    if temp[0] == 'index':
+        Select(search_switch(type, path)).select_by_index(temp[1])
+    elif temp[0] == 'value':
+        Select(search_switch(type, path)).select_by_value(temp[1])
+    elif temp[0] == 'text':
+        Select(search_switch(type, path)).select_by_visible_text(temp[1])
 
 
 # 事件映射
@@ -96,8 +108,8 @@ def do_excel_actions():
 action_map = {'open': open_driver,
               'click': single_click,
               'input': textbox_input,
-              'get': browser_get}
-
+              'get': browser_get,
+              'select': select_action}
 
 
 if __name__ == '__main__':

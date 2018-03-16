@@ -20,7 +20,7 @@ def do_excel_actions():
     # action_title = actions[0]
 
     # 获取指令
-    for action in actions[2:]:
+    for action in actions[1:]:
         # action, type, path, text
         print(action)
         action_switch(action[4], action[5], action[6], action[7], action[8], action[9], action[10], action[11])

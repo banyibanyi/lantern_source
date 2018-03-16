@@ -20,7 +20,7 @@ def read_excel():
     loop_dict.pop('loop')
 
     # 创建数组将excel中的信息写入
-    commands = [sheet_command.row_values(0)]
+    commands = []
 
     # 指令标题行
     # 如果dict不为空说明有循环标记，需要将指令循环添加到指令队列中

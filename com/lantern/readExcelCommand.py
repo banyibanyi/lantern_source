@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import xlrd
+from doDriver import *
 from collections import Counter
 
 
@@ -61,7 +62,7 @@ def read_excel():
                         for action in temp_commands:
                             commands.append(action)
                 else:
-                    print("error, too many parameters")
+                    CommonClass.get_logger().error("error, too many parameters")
             row_num = row_num + 1
     # 如果excel中没有循环标志 直接将所有内容转换到数组中
     else:

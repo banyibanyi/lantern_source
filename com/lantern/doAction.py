@@ -23,7 +23,7 @@ def single_click(type, path, text, assert_oral, assert_type, assert_goal, wait_t
     try:
         search_switch(type, path).click()
     except Exception as err:
-        print(err)
+        CommonClass.get_logger().error(err)
         CommonClass.get_driver().navigate.refresh()
         search_switch(type, path).click()
 
@@ -40,7 +40,7 @@ def textbox_input(type, path, text, assert_oral, assert_type, assert_goal, wait_
             search_switch(type, path).send_keys(text)
         # 遇到错误动作进行重试 该部分需要根据异常细化
         except Exception as err:
-            print(err)
+            CommonClass.get_logger().error(err)
             CommonClass.get_driver().navigate.refresh()
             search_switch(type, path).send_keys(text)
 

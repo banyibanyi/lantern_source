@@ -34,12 +34,15 @@ def textbox_input(type, path, text, assert_oral, assert_type, assert_goal, wait_
     if wait_time != '' and int(wait_time) > 0:
         ui.WebDriverWait(CommonClass().get_driver(), int(wait_time))\
             .until(ec.visibility_of_element_located((type, path)))
-    try:
-        search_switch(type, path).send_keys(text)
-    except Exception as err:
-        print(err)
-        CommonClass.get_driver().navigate.refresh()
-        search_switch(type, path).send_keys(text)
+    # 如果有需要input输入内容进行内容录入
+    if len(text) > 0:
+        try:
+            search_switch(type, path).send_keys(text)
+        # 遇到错误动作进行重试 该部分需要根据异常细化
+        except Exception as err:
+            print(err)
+            CommonClass.get_driver().navigate.refresh()
+            search_switch(type, path).send_keys(text)
 
 
 # 地址跳转事件

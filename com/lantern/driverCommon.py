@@ -25,5 +25,5 @@ class CommonClass:
 
     @classmethod
     def stop_log_listing(cls):
-        cls.logging.config.stopListening()
+        logging.config.stopListening()
 
